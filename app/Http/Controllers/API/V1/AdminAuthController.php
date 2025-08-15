@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthController extends Controller
+class AdminAuthController extends Controller
 {
     public function login(UserLoginRequest $request)
     {
@@ -22,12 +22,6 @@ class AuthController extends Controller
         }
 
         $user = User::where('username', $validated['username'])->first();
-
-        if ($user->is_admin) {
-            return response()->json([
-                'message' => 'Access denied!',
-            ], Response::HTTP_FORBIDDEN);
-        }
 
         return response()->json([
             'message' => 'Welcome back!',
