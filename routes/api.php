@@ -4,6 +4,7 @@ use App\Http\Controllers\API\V1\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\API\V1\Admin\ServiceController;
 use App\Http\Controllers\API\V1\User\AuthController as UserAuthController;
 use App\Http\Controllers\API\V1\User\RegisterController;
+use App\Http\Controllers\API\V1\User\ServiceBookingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -19,5 +20,10 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::post('logout', [UserAuthController::class, 'logout']);
+        Route::controller(ServiceBookingController::class)->group(function () {
+            Route::get('services', 'getAllServices');
+            Route::post('bookings', 'bookService');
+            Route::get('bookings', 'getAllBookings');
+        });
     });
 });
