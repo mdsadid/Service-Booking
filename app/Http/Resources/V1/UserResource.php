@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'email'             => $this->email,
             'email_verified_at' => $this->email_verified_at,
             'is_admin'          => $this->is_admin ? 'yes' : 'no',
-            'token'             => $this->createToken("API Token of $this->name")->plainTextToken,
+            'token'             => $this->when(isset($this->token), $this->token),
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,
         ];

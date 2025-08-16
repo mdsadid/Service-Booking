@@ -29,6 +29,10 @@ class AuthController extends Controller
             ], Response::HTTP_FORBIDDEN);
         }
 
+        $token = $user->createToken("API Token of $user->name")->plainTextToken;
+
+        $user->setAttribute('token', $token);
+
         return response()->json([
             'message' => 'Welcome back!',
             'user'    => new UserResource($user),

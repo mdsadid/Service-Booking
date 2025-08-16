@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\API\V1\Admin\BookingController;
 use App\Http\Controllers\API\V1\Admin\ServiceController;
 use App\Http\Controllers\API\V1\User\AuthController as UserAuthController;
 use App\Http\Controllers\API\V1\User\RegisterController;
@@ -17,6 +18,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix('admin')->group(function () {
             Route::post('logout', [AdminAuthController::class, 'logout']);
             Route::apiResource('services', ServiceController::class)->middleware('admin');
+            Route::get('bookings', BookingController::class);
         });
 
         Route::post('logout', [UserAuthController::class, 'logout']);

@@ -22,6 +22,10 @@ class RegisterController extends Controller
             )
         );
 
+        $token = $user->createToken("API Token of $user->name")->plainTextToken;
+
+        $user->setAttribute('token', $token);
+
         return response()->json([
             'message' => 'User registered successfully.',
             'user'    => new UserResource($user),
