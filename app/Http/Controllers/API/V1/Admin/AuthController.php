@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
-use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,17 +30,15 @@ class AuthController extends Controller
 
         $token = $user->createToken("API Token of $user->name")->plainTextToken;
 
-        $user->setAttribute('token', $token);
-
         return response()->json([
             'message' => 'Welcome back!',
-            'user'    => new UserResource($user),
+            'token'   => $token,
         ]);
     }
 
     public function logout()
     {
-        Auth::user()->currentAccessToken()->delete();
+        auth()->user()->currentAccessToken()->delete();
 
         return response()->json([
             'message' => 'See ya next time!',
