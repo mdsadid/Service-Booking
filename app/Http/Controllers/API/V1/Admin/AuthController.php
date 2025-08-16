@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAuthController extends Controller
+class AuthController extends Controller
 {
     public function login(UserLoginRequest $request)
     {
@@ -22,6 +22,12 @@ class AdminAuthController extends Controller
         }
 
         $user = User::where('username', $validated['username'])->first();
+
+        if (!$user->is_admin) {
+            return response()->json([
+                'message' => 'Access denied!',
+            ], Response::HTTP_FORBIDDEN);
+        }
 
         return response()->json([
             'message' => 'Welcome back!',
